@@ -28,6 +28,8 @@
 
 #include <fprint.h>
 
+#define array_n_elements(array) (sizeof(array) / sizeof(array[0]))
+
 #define container_of(ptr, type, member) ({                      \
         const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
         (type *)( (char *)__mptr - offsetof(type,member) );})
@@ -261,6 +263,9 @@ extern struct fp_img_driver fdu2000_driver;
 #endif
 #ifdef ENABLE_VCOM5S
 extern struct fp_img_driver vcom5s_driver;
+#endif
+#ifdef ENABLE_VFS5011
+extern struct fp_img_driver vfs5011_driver;
 #endif
 
 extern libusb_context *fpi_usb_ctx;

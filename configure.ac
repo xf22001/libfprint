@@ -19,7 +19,7 @@ AC_SUBST(lt_major)
 AC_SUBST(lt_revision)
 AC_SUBST(lt_age)
 
-all_drivers="upekts upektc upeksonly vcom5s uru4000 fdu2000 aes1610 aes2501 aes4000"
+all_drivers="upekts upektc upeksonly vcom5s uru4000 fdu2000 aes1610 aes2501 aes4000 vfs5011"
 
 require_imagemagick='no'
 require_aeslib='no'
@@ -32,6 +32,7 @@ enable_fdu2000='no'
 enable_aes1610='no'
 enable_aes2501='no'
 enable_aes4000='no'
+enable_vfs5011='no'
 
 AC_ARG_WITH([drivers],[AS_HELP_STRING([--with-drivers],
 	[List of drivers to enable])],
@@ -80,6 +81,10 @@ for driver in `echo ${drivers} | sed -e 's/,/ /g' -e 's/,$//g'`; do
 			require_imagemagick="yes"
 			enable_aes4000="yes"
 		;;
+		vfs5011)
+			AC_DEFINE([ENABLE_VFS5011], [], [Build Validity VFS5011 driver])
+			enable_vfs5011="yes"
+		;;
 	esac
 done
 
@@ -92,6 +97,7 @@ AM_CONDITIONAL([ENABLE_URU4000], [test "$enable_uru4000" != "no"])
 #AM_CONDITIONAL([ENABLE_AES1610], [test "$enable_aes1610" != "no"])
 AM_CONDITIONAL([ENABLE_AES2501], [test "$enable_aes2501" != "no"])
 AM_CONDITIONAL([ENABLE_AES4000], [test "$enable_aes4000" != "no"])
+AM_CONDITIONAL([ENABLE_VFS5011], [test "$enable_vfs5011" != "no"])
 AM_CONDITIONAL([REQUIRE_IMAGEMAGICK], [test "$require_imagemagick" != "no"])
 AM_CONDITIONAL([REQUIRE_AESLIB], [test "$require_aeslib" != "no"])
 

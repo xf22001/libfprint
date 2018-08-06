@@ -11,6 +11,7 @@ AES2501_SRC = drivers/aes2501.c drivers/aes2501.h
 AES4000_SRC = drivers/aes4000.c
 FDU2000_SRC = drivers/fdu2000.c
 VCOM5S_SRC = drivers/vcom5s.c
+VFS5011_SRC = drivers/vfs5011.c
 
 DRIVER_SRC =
 OTHER_SRC =
@@ -101,6 +102,10 @@ endif
 
 if ENABLE_AES4000
 DRIVER_SRC += $(AES4000_SRC)
+endif
+
+if ENABLE_VFS5011
+DRIVER_SRC += $(VFS5011_SRC)
 endif
 
 if REQUIRE_IMAGEMAGICK
