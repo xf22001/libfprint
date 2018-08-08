@@ -932,14 +932,18 @@ static void activate_loop_complete(struct fpi_ssm *ssm)
 	submit_image(ssm, data);
 	fpi_imgdev_report_finger_status(dev, FALSE);
 
-	fpi_ssm_free(ssm);
+	if(dev->action_state == IMG_ACQUIRE_STATE_AWAIT_FINGER_ON) {
+		fpi_ssm_start(ssm, activate_loop_complete);
+	} else {
+		fpi_ssm_free(ssm);
 
-	if (r) {
-		fpi_imgdev_session_error(dev, r);
-	}
+		if (r) {
+			fpi_imgdev_session_error(dev, r);
+		}
 
-	if (data->deactivating) {
-		fpi_imgdev_deactivate_complete(dev);
+		if (data->deactivating) {
+			fpi_imgdev_deactivate_complete(dev);
+		}
 	}
 }
 

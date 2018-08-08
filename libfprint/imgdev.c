@@ -241,7 +241,17 @@ void fpi_imgdev_image_captured(struct fp_img_dev *imgdev, struct fp_img *img)
 	imgdev->acquire_data = print;
 	switch (imgdev->action) {
 	case IMG_ACTION_ENROLL:
-		imgdev->action_result = FP_ENROLL_COMPLETE;
+		if(imgdev->dev->__enroll_stage == -1) {
+			imgdev->dev->__enroll_stage = 1;
+		} else {
+			imgdev->dev->__enroll_stage += 1;
+		}
+		if(imgdev->dev->__enroll_stage == imgdev->dev->nr_enroll_stages) {
+			imgdev->dev->__enroll_stage = -1;
+			imgdev->action_result = FP_ENROLL_COMPLETE;
+		} else {
+			imgdev->action_result = FP_ENROLL_PASS;
+		}
 		break;
 	case IMG_ACTION_VERIFY:
 		verify_process_img(imgdev);
